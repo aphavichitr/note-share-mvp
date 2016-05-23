@@ -15,6 +15,7 @@ class App extends React.Component {
         <Nav />
         <div>
           <input type="file" />
+          <button onClick={>Post</button>
           <NoteList notes={this.state.notes}/>
         </div>
       </div>
