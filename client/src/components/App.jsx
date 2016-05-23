@@ -7,11 +7,14 @@ class App extends React.Component {
     }
   }
 
+
+
   render() {
     return (
       <div>
         <Nav />
         <div>
+          <input type="file" />
           <NoteList notes={this.state.notes}/>
         </div>
       </div>
