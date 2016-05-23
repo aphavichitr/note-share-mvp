@@ -9,7 +9,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>'Hello World!'</div>
+      <div>
+        <Nav />
+        <div>
+          <NoteList notes={this.state.notes}/>
+        </div>
+      </div>
     );
   }
 }
