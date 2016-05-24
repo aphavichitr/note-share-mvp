@@ -6,6 +6,7 @@ class Search extends React.Component {
   render() {
     return (
       <div>
+        Search
         <input type="text" />
       </div>
     );

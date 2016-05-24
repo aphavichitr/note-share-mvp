@@ -21,6 +21,7 @@
     "busboy": "^0.2.13",
     "connect-busboy": "0.0.2",
     "express": "^4.13.4",
+    "jquery": "^2.2.4",
     "mongodb": "^2.1.19",
     "mongoose": "^4.4.19",
     "multer": "^1.1.0",
