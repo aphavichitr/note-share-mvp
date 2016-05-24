@@ -1,16 +1,24 @@
 var express = require('express');
+//var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var browserify = require('browserify');
-var react = require('react');
-var jsx = require('node-jsx');
 
 var app = express();
+// app.use(bodyParser);
 
-jsx.install();
+// Serve static files that babel compiled
+app.use(express.static(__dirname + '/../client'));
+app.use(express.static(__dirname + '/../compiled'));
+app.use(express.static(__dirname + '/../node_modules'));
 
-var Notes = require('../client/index.js');
+// Routes
+app.get('/', function(req, res) {
+  res.send();
+});
 
+app.post('/', function(req, res) {
+  console.log('Got request from react!');
 
+});
 
 mongoose.connect('mongodb://localhost/notes');
 
