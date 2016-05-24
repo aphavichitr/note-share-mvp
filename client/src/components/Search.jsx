@@ -3,11 +3,15 @@ class Search extends React.Component {
     super(props);
   }
 
+  handleChange(e) {
+    this.props.handleSearchChange(e.target.value);
+  }
+
   render() {
     return (
       <div>
         Search
-        <input type="text" />
+        <input type="text" onChange={this.handleChange.bind(this)}/>
       </div>
     );
   }

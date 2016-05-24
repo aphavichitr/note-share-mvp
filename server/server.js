@@ -33,7 +33,6 @@ app.get('/notes', function(req, res) {
     if (err) {
       res.status(500).send(err);
     } else {
-      console.log('get notes');
       res.status(200).send(notes);
     }
   });
@@ -56,6 +55,35 @@ app.post('/notes', upload.single('note'), function(req, res) {
       res.status(500).send(err);
     } else {
       res.status(200).send(newNote);
+    }
+  });
+});
+
+app.post('/search', function(req, res) {
+  Note.find({description: req.body.search}).exec(function(err, notes) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      console.log('get notes');
+      res.status(200).send(notes);
+    }
+  });
+});
+
+app.post('/note', function(req, res) {
+  console.log('inside search');
+  Note.findOne({url: req.body.url}).exec(function(err, note) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      console.log('get note');
+      fs.readFile(note.url, function(err, contents) {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.status(200).send(contents);
+        }
+      });
     }
   });
 });

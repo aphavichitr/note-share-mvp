@@ -31,6 +31,26 @@ class App extends React.Component {
     });
   }
 
+  fetchSearch(search) {
+    console.log('Search', search);
+    var context = this;
+    $.ajax({
+      url: 'http://localhost:3000/search',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({search: search}),
+      success: function(data) {
+        context.setState({
+          notes: data
+        });
+        console.log('Successful Get!');
+      },
+      error: function(data) {
+        console.error('Get Failed! ', data);
+      }
+    });
+  }
+
   textChange(e) {
     this.setState({
       description: e.target.value
@@ -59,10 +79,31 @@ class App extends React.Component {
     })
   }
 
+  searchNotes(search) {
+    console.log(this);
+    if (search === '') {
+      this.fetchNotes();
+    } else {
+      // var searchNotes = [];
+      // console.log(search);
+      // _.each(this.state.notes, function(note) {
+      //   console.log(search);
+      //   if (note.description === search) {
+      //     console.log(note.description);
+      //     searchNotes.push(note);
+      //   }
+      // })
+      // this.setState({
+      //   notes: searchNotes
+      // });
+      this.fetchSearch(search);
+    }
+  }
+
   render() {
     return (
       <div>
-        <Nav />
+        <Nav handleSearchChange={(input) => this.searchNotes(input)}/>
         <div>
           <form method="POST" action="/" enctype="multipart/form-data">
             <input type="text" name="description" value={this.state.description} onChange={this.textChange.bind(this)}/>

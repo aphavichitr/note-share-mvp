@@ -1,6 +1,5 @@
-var Nav = ({props}) => (
-
+var Nav = ({handleSearchChange}) => (
   <nav>
-    <Search />
+    <Search handleSearchChange={handleSearchChange}/>
   </nav>
 );
