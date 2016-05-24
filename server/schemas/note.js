@@ -6,3 +6,7 @@ var NoteSchema = new mongoose.Schema({
   username: String,
   likes: Number
 });
+
+var Note = mongoose.model('Note', NoteSchema);
+
+module.exports = Note;

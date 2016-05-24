@@ -8,7 +8,7 @@ var Note = require('./schemas/note');
 
 var app = express();
 var upload = multer({dest: 'note_files/'});
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 // Serve static files that babel compiled
 app.use(express.static(__dirname + '/../client'));
@@ -24,54 +24,41 @@ var headers = {
   //'Content-Type': 'application/json'
 };
 
+// Mongodb connection
+mongoose.connect('mongodb://localhost/notes');
+
 // Routes
 app.get('/', function(req, res) {
-  res.writeHead(headers);
-  res.send();
+  console.log('get notes');
+  Note.find({}).exec(function(err, notes) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      console.log('get notes');
+      res.status(200).send(notes);
+    }
+  });
 });
 
 app.post('/', upload.single('note'), function(req, res) {
   console.log('Got request from react!');
-  // console.log(req);
   console.log('Body: ', req.body);
   console.log('File: ', req.file);
   console.dir(req.headers['content-type']);
 
-  // var newNote = {
-  //   url: 
-  // }
-
-  res.writeHead(headers);
-  res.end();
+  var newNote = new Note({
+    url: __dirname + '/../note_files/' + req.file.filename,
+    description: req.body.description,
+    username: 'Andrew',
+    likes: 0
+  });
+  newNote.save(function(err, newNote) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(newNote);
+    }
+  });
 });
-
-// app.post('/*', upload.single('note'), function(req, res) {
-//   console.log('Got request from react!');
-//   // console.log(req);
-//   console.log('Body: ', req.body);
-//   console.log('File: ', req.file);
-//   console.dir(req.headers['content-type']);
-
-//   var url = req.file.filename;
-//   var newNote = new Note({
-//     url: url,
-//     description: req.body.description,
-//     username: 'Andrew',
-//     likes: 0
-//   });
-//   newNote.save(function(err, newNote) {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else {
-//       res.status(200).send(newNote);
-//     }
-//   });
-
-
-//   res.writeHead(headers);
-//   res.end();
-// });
-
-mongoose.connect('mongodb://localhost/notes');
 
 app.listen(3000);

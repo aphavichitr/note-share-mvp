@@ -4,30 +4,48 @@ class App extends React.Component {
 
     this.state = {
       notes: [],
-      file: ''
+      file: '',
+      description: ''
     }
   }
 
-  handleChange(e) {
-    debugger;
-    //var form = $('form')[0];
-
-    var formData = new FormData();
-    formData.append('file', e.target.files[0]);
-    console.log('File: ', e.target.files[0]);
-    console.log('Formdata: ',formData);
+  componentDidMount() {
+    console.log('componentDidMount');
     $.ajax({
       url: 'http://localhost:3000/',
-      data: e.target.files[0],
+      type: 'GET',
+      success: function(data) {
+        console.log('Get Data: ', data);
+        
+      },
+      error: function(data) {
+        console.error('Get Failed! ', data);
+      }
+    });
+  }
+
+  textChange(e) {
+    this.setState({
+      description: e.target.value
+    });
+  }
+
+  handleChange(e) {
+    var formData = new FormData();
+    formData.append('note', e.target.files[0]);
+    formData.append('description', this.state.description);
+    $.ajax({
+      url: 'http://localhost:3000/',
+      data: formData,
       type: 'POST',
       contentType: false,
       processData: false,
       success: function(data) {
-        console.log('Data: ', data);
+        console.log('Post Data: ', data);
         console.log('Successful Post!');
       },
       error: function(data) {
-        console.error('Post Failed!', data);
+        console.error('Post Failed! ', data);
       }
     })
   }
@@ -38,7 +56,8 @@ class App extends React.Component {
         <Nav />
         <div>
           <form method="POST" action="/" enctype="multipart/form-data">
-            <input type="file" name="note" onChange={this.handleChange}/>
+            <input type="text" name="description" value={this.state.description} onChange={this.textChange.bind(this)}/>
+            <input type="file" name="note" onChange={this.handleChange.bind(this)}/>
           </form>
           <NoteList notes={this.state.notes}/>
         </div>
@@ -46,5 +65,3 @@ class App extends React.Component {
     );
   }
 }
-            // <input type="text" name="description"/>
-            // <input type="submit" value="Post Note"/>
