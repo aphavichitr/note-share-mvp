@@ -64,20 +64,18 @@ app.post('/search', function(req, res) {
     if (err) {
       res.status(500).send(err);
     } else {
-      console.log('get notes');
       res.status(200).send(notes);
     }
   });
 });
 
 app.post('/note', function(req, res) {
-  console.log('inside search');
   Note.findOne({url: req.body.url}).exec(function(err, note) {
     if (err) {
       res.status(500).send(err);
     } else {
-      console.log('get note');
-      fs.readFile(note.url, function(err, contents) {
+      fs.readFile(note.url, 'utf8', function(err, contents) {
+        console.log(contents);
         if (err) {
           res.status(500).send(err);
         } else {

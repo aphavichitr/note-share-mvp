@@ -1,5 +1,7 @@
-var NoteContent = ({note}) => (
-  <div>
-    {note}
-  </div>
-);
+var NoteContent = ({content}) => {
+  return (
+    <div>
+      {content}
+    </div>
+  )
+};

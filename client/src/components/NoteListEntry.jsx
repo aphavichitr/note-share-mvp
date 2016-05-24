@@ -2,21 +2,19 @@ class NoteListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      note: '',
+      content: '',
       showContents: false
     }
   }
 
   handleClick() {
-    var url = document.getElementByClassName('url').innerHTML;
-    this.fetchNote(url);
+    this.fetchNote(this.props.note.url);
     this.setState({
       showContents: !this.state.showContents
     });
   }
 
   fetchNote(url) {
-    console.log('URL', url);
     var context = this;
     $.ajax({
       url: 'http://localhost:3000/note',
@@ -24,10 +22,11 @@ class NoteListEntry extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({url: url}),
       success: function(data) {
+        console.log(data);
         context.setState({
-          note: data
+          content: data
         });
-        console.log('Successful Get!');
+        console.log('Successful Get! ', context.state.content);
       },
       error: function(data) {
         console.error('Get Failed! ', data);
@@ -44,11 +43,12 @@ class NoteListEntry extends React.Component {
         <div class="url" onClick={this.handleClick.bind(this)}>
           {this.props.note.url}
           <div>
-            {this.state.showContents ? <NoteContent note={note}/> : null}
+            {this.state.showContents ? <NoteContent key={'1'} content={this.state.content}/> : null}
           </div>
         </div>
         <div>
-          {this.props.note.username} {this.props.note.likes}
+          <a> {this.props.note.username} </a>
+          <span> Likes {this.props.note.likes}</span>
         </div>
       </div>
     );
