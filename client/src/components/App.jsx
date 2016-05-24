@@ -3,7 +3,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      notes: []
+      notes: [],
+      file: ''
     }
   }
 
@@ -11,15 +12,14 @@ class App extends React.Component {
     console.log('change happened');
   }
 
-
   render() {
     return (
       <div>
         <Nav />
         <div>
-          <form method="POST" action="/">
-            <input type="file" onChange={this.handleChange}/>
-            <input type="text"/>
+          <form method="POST" enctype="multipart/form-data" action="/">
+            <input type="file" name="note" onChange={this.handleChange}/>
+            <input type="submit" value="Post Note"/>
           </form>
           <NoteList notes={this.state.notes}/>
         </div>

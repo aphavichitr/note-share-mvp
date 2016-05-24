@@ -18,9 +18,12 @@
   "homepage": "https://github.com/aphavichitr/notes-share-mvp#readme",
   "dependencies": {
     "body-parser": "^1.15.1",
+    "busboy": "^0.2.13",
+    "connect-busboy": "0.0.2",
     "express": "^4.13.4",
     "mongodb": "^2.1.19",
     "mongoose": "^4.4.19",
+    "multer": "^1.1.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0"
   },
