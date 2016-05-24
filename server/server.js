@@ -28,8 +28,7 @@ var headers = {
 mongoose.connect('mongodb://localhost/notes');
 
 // Routes
-app.get('/', function(req, res) {
-  console.log('get notes');
+app.get('/notes', function(req, res) {
   Note.find({}).exec(function(err, notes) {
     if (err) {
       res.status(500).send(err);
@@ -40,7 +39,7 @@ app.get('/', function(req, res) {
   });
 });
 
-app.post('/', upload.single('note'), function(req, res) {
+app.post('/notes', upload.single('note'), function(req, res) {
   console.log('Got request from react!');
   console.log('Body: ', req.body);
   console.log('File: ', req.file);

@@ -1,11 +1,17 @@
 var NoteListEntry = ({note}) => {
-
   return (
     <div>
-      Hello World!
+      <div>
+        {note.description}
+      </div>
+      <div>
+        {note.url}
+      </div>
+      <div>
+        {note.username} {note.likes}
+      </div>
     </div>
   );
-
 };
 
 NoteListEntry.propTypes = {

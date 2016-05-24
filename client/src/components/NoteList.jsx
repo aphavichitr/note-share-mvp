@@ -1,12 +1,9 @@
 var NoteList = ({notes}) => {
-
-  var noteList = notes.map(note =>
-    <NoteListEntry note={note}/>
-  );
-
   return (
     <div>
-      {noteList}
+      {notes.map(note =>
+        <NoteListEntry key={note._id} note={note}/>
+      )}
     </div>
   );
 };

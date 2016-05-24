@@ -10,13 +10,20 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
+    this.fetchNotes();
+  }
+
+  fetchNotes() {
+    var context = this;
     $.ajax({
-      url: 'http://localhost:3000/',
+      url: 'http://localhost:3000/notes',
       type: 'GET',
+      contentType: 'application/json',
       success: function(data) {
-        console.log('Get Data: ', data);
-        
+        context.setState({
+          notes: data
+        });
+        console.log('Successful Get!');
       },
       error: function(data) {
         console.error('Get Failed! ', data);
@@ -31,11 +38,12 @@ class App extends React.Component {
   }
 
   handleChange(e) {
+    var context = this;
     var formData = new FormData();
     formData.append('note', e.target.files[0]);
     formData.append('description', this.state.description);
     $.ajax({
-      url: 'http://localhost:3000/',
+      url: 'http://localhost:3000/notes',
       data: formData,
       type: 'POST',
       contentType: false,
@@ -43,6 +51,7 @@ class App extends React.Component {
       success: function(data) {
         console.log('Post Data: ', data);
         console.log('Successful Post!');
+        context.fetchNotes();
       },
       error: function(data) {
         console.error('Post Failed! ', data);
