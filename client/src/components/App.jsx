@@ -32,7 +32,6 @@ class App extends React.Component {
   }
 
   fetchSearch(search) {
-    console.log('Search', search);
     var context = this;
     $.ajax({
       url: 'http://localhost:3000/search',
@@ -69,7 +68,6 @@ class App extends React.Component {
       contentType: false,
       processData: false,
       success: function(data) {
-        console.log('Post Data: ', data);
         console.log('Successful Post!');
         context.fetchNotes();
       },
@@ -80,7 +78,6 @@ class App extends React.Component {
   }
 
   searchNotes(search) {
-    console.log(this);
     if (search === '') {
       this.fetchNotes();
     } else {
@@ -92,12 +89,11 @@ class App extends React.Component {
     return (
       <div>
         <Nav handleSearchChange={(input) => this.searchNotes(input)}/>
+        <br/>
         <div>
           <form method="POST" action="/" enctype="multipart/form-data">
-            <label for="title">Title:</label>
-            <input type="text" class="form-control" name="description" value={this.state.description} onChange={this.textChange.bind(this)}/>
-            <label class="btn btn-default btn-file">
-              <input type="file" name="note" onChange={this.handleChange.bind(this)}/>
+            <input type="text" class="form-control" name="description" value={this.state.description} onChange={this.textChange.bind(this)} placeholder="Enter Title"/>
+            <label class="btn btn-default btn-file">Upload Note<input type="file" name="note" onChange={this.handleChange.bind(this)}/>
             </label>
           </form>
           <NoteList notes={this.state.notes}/>

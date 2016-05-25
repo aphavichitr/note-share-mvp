@@ -39,11 +39,6 @@ app.get('/notes', function(req, res) {
 });
 
 app.post('/notes', upload.single('note'), function(req, res) {
-  console.log('Got request from react!');
-  console.log('Body: ', req.body);
-  console.log('File: ', req.file);
-  console.dir(req.headers['content-type']);
-
   var newNote = new Note({
     url: __dirname + '/../note_files/' + req.file.filename,
     description: req.body.description,
@@ -99,6 +94,22 @@ app.post('/likes', function(req, res) {
           }
         });
       }
+  });
+});
+
+app.post('/subcontent', function(req, res) {
+  Note.findOne({url: req.body.url}).exec(function(err, note) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      fs.readFile(note.url, 'utf8', function(err, contents) {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.status(200).send(contents);
+        }
+      });
+    }
   });
 });
 
