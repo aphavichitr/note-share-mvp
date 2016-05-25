@@ -26,7 +26,7 @@ class NoteListEntry extends React.Component {
         context.setState({
           content: data
         });
-        console.log('Successful Get! ', context.state.content);
+        console.log('Successful Get!');
       },
       error: function(data) {
         console.error('Get Failed! ', data);

@@ -75,7 +75,6 @@ app.post('/note', function(req, res) {
       res.status(500).send(err);
     } else {
       fs.readFile(note.url, 'utf8', function(err, contents) {
-        console.log(contents);
         if (err) {
           res.status(500).send(err);
         } else {

@@ -84,18 +84,6 @@ class App extends React.Component {
     if (search === '') {
       this.fetchNotes();
     } else {
-      // var searchNotes = [];
-      // console.log(search);
-      // _.each(this.state.notes, function(note) {
-      //   console.log(search);
-      //   if (note.description === search) {
-      //     console.log(note.description);
-      //     searchNotes.push(note);
-      //   }
-      // })
-      // this.setState({
-      //   notes: searchNotes
-      // });
       this.fetchSearch(search);
     }
   }
@@ -106,8 +94,11 @@ class App extends React.Component {
         <Nav handleSearchChange={(input) => this.searchNotes(input)}/>
         <div>
           <form method="POST" action="/" enctype="multipart/form-data">
-            <input type="text" name="description" value={this.state.description} onChange={this.textChange.bind(this)}/>
-            <input type="file" name="note" onChange={this.handleChange.bind(this)}/>
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" name="description" value={this.state.description} onChange={this.textChange.bind(this)}/>
+            <label class="btn btn-default btn-file">
+              <input type="file" name="note" onChange={this.handleChange.bind(this)}/>
+            </label>
           </form>
           <NoteList notes={this.state.notes}/>
         </div>

@@ -9,8 +9,8 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div>
-        Search
+      <div class="search">
+        <label for="search">Search:</label>
         <input type="text" onChange={this.handleChange.bind(this)}/>
       </div>
     );
