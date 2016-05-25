@@ -85,4 +85,21 @@ app.post('/note', function(req, res) {
   });
 });
 
+app.post('/likes', function(req, res) {
+  Note.findOne({url: req.body.url}).exec(function(err, note) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        note.likes++;
+        note.save(function(err, note) {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            res.status(200).send(note);
+          }
+        });
+      }
+  });
+});
+
 app.listen(3000);

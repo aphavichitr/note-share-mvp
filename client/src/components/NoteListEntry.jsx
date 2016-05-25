@@ -1,9 +1,11 @@
 class NoteListEntry extends React.Component {
   constructor(props) {
     super(props);
+    console.log('initial likes', this.props.note.likes);
     this.state = {
       content: '',
-      showContents: false
+      showContents: false,
+      likes: this.props.note.likes
     }
   }
 
@@ -22,9 +24,32 @@ class NoteListEntry extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({url: url}),
       success: function(data) {
-        console.log(data);
         context.setState({
           content: data
+        });
+        console.log('Successful Get!');
+      },
+      error: function(data) {
+        console.error('Get Failed! ', data);
+      }
+    });
+  }
+
+  handleLikes() {
+    this.fetchLikes(this.props.note.url);
+  }
+
+  fetchLikes(url) {
+    var context = this;
+    $.ajax({
+      url: 'http://localhost:3000/likes',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({url: url}),
+      success: function(data) {
+        console.log('Likes data returned :', data.likes);
+        context.setState({
+          likes: data.likes
         });
         console.log('Successful Get!');
       },
@@ -48,7 +73,7 @@ class NoteListEntry extends React.Component {
         </div>
         <div>
           <a> {this.props.note.username} </a>
-          <span> Likes {this.props.note.likes}</span>
+          <a onClick={this.handleLikes.bind(this)}> Likes {this.state.likes}</a>
         </div>
       </div>
     );
